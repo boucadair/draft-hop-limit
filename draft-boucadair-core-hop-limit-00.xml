@@ -127,23 +127,11 @@
       CoAP client can communicate directly with a server or indirectly via a
       proxy. </t>
 
-      <t>When proxies are involved, infinite forwarding loops may be
-      experienced. <xref target="RFC7252"></xref> acknowledges the issues but
-      does not specify how to solve it: </t>
-
-      <t><list style="empty">
-          <t>"Note that the forward-proxy MAY forward the request on to
-          another proxy or directly to the server specified by the
-          absolute-URI. In order to avoid request loops, a proxy MUST be able
-          to recognize all of its server names, including any aliases, local
-          variations, and the numeric IP addresses."</t>
-        </list></t>
-
-      <t>To prevent infinite forwarding loops, this document defines a new
-      CoAP option, called Hop-Limit, which is inserted by on-path proxies.
-      Also, the document defines a new CoAP Response Code to report loops
-      together with relevant diagnostic information to ease troubleshooting.
-      </t>
+      <t>When multiple proxies are involved, infinite forwarding loops may be
+      experienced. To prevent such loops, this document defines a new CoAP
+      option, called Hop-Limit, which is inserted by on-path proxies. Also,
+      the document defines a new CoAP Response Code to report loops together
+      with relevant diagnostic information to ease troubleshooting. </t>
     </section>
 
     <section anchor="notation" title="Terminology">

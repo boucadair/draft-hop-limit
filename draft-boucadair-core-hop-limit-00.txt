@@ -66,13 +66,13 @@ Table of Contents
    1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
    2.  Terminology . . . . . . . . . . . . . . . . . . . . . . . . .   2
    3.  Hop-Limit Option  . . . . . . . . . . . . . . . . . . . . . .   3
-   4.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   4
-     4.1.  CoAP Response Code  . . . . . . . . . . . . . . . . . . .   4
+   4.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   3
+     4.1.  CoAP Response Code  . . . . . . . . . . . . . . . . . . .   3
      4.2.  CoAP Option Number  . . . . . . . . . . . . . . . . . . .   4
    5.  Security Considerations . . . . . . . . . . . . . . . . . . .   4
    6.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   4
      6.1.  Normative References  . . . . . . . . . . . . . . . . . .   4
-     6.2.  Informative References  . . . . . . . . . . . . . . . . .   5
+     6.2.  Informative References  . . . . . . . . . . . . . . . . .   4
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .   5
 
 1.  Introduction
@@ -85,18 +85,9 @@ Table of Contents
    providers.  In such contexts, a CoAP client can communicate directly
    with a server or indirectly via a proxy.
 
-   When proxies are involved, infinite forwarding loops may be
-   experienced.  [RFC7252] acknowledges the issues but does not specify
-   how to solve it:
-
-      "Note that the forward-proxy MAY forward the request on to another
-      proxy or directly to the server specified by the absolute-URI.  In
-      order to avoid request loops, a proxy MUST be able to recognize
-      all of its server names, including any aliases, local variations,
-      and the numeric IP addresses."
-
-   To prevent infinite forwarding loops, this document defines a new
-   CoAP option, called Hop-Limit, which is inserted by on-path proxies.
+   When multiple proxies are involved, infinite forwarding loops may be
+   experienced.  To prevent such loops, this document defines a new CoAP
+   option, called Hop-Limit, which is inserted by on-path proxies.
    Also, the document defines a new CoAP Response Code to report loops
    together with relevant diagnostic information to ease
    troubleshooting.
@@ -105,6 +96,15 @@ Table of Contents
 
    The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
    "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
+   "OPTIONAL" in this document are to be interpreted as described in
+   [RFC2119].
+
+   Readers should be familiar with the terms and concepts defined in
+   [RFC7252].
+
+
+
+
 
 
 
@@ -113,12 +113,6 @@ Boucadair, et al.       Expires February 17, 2019               [Page 2]
 
 Internet-Draft            CoAP Hop Limit Option              August 2018
 
-
-   "OPTIONAL" in this document are to be interpreted as described in
-   [RFC2119].
-
-   Readers should be familiar with the terms and concepts defined in
-   [RFC7252].
 
 3.  Hop-Limit Option
 
@@ -159,7 +153,13 @@ Internet-Draft            CoAP Hop Limit Option              August 2018
    Limit carried in received messages (that is, ignore the value of Hop-
    Limit received in a message).
 
+4.  IANA Considerations
 
+4.1.  CoAP Response Code
+
+   IANA is requested to add the following entries to the "CoAP Response
+   Codes" sub-registry available at https://www.iana.org/assignments/
+   core-parameters/core-parameters.xhtml#response-codes:
 
 
 
@@ -169,14 +169,6 @@ Boucadair, et al.       Expires February 17, 2019               [Page 3]
 
 Internet-Draft            CoAP Hop Limit Option              August 2018
 
-
-4.  IANA Considerations
-
-4.1.  CoAP Response Code
-
-   IANA is requested to add the following entries to the "CoAP Response
-   Codes" sub-registry available at https://www.iana.org/assignments/
-   core-parameters/core-parameters.xhtml#response-codes:
 
                      +------+------------------+-----------+
                      | Code | Description      | Reference |
@@ -215,6 +207,14 @@ Internet-Draft            CoAP Hop Limit Option              August 2018
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/info/rfc2119>.
 
+   [RFC7252]  Shelby, Z., Hartke, K., and C. Bormann, "The Constrained
+              Application Protocol (CoAP)", RFC 7252,
+              DOI 10.17487/RFC7252, June 2014,
+              <https://www.rfc-editor.org/info/rfc7252>.
+
+6.2.  Informative References
+
+
 
 
 
@@ -225,13 +225,6 @@ Boucadair, et al.       Expires February 17, 2019               [Page 4]
 
 Internet-Draft            CoAP Hop Limit Option              August 2018
 
-
-   [RFC7252]  Shelby, Z., Hartke, K., and C. Bormann, "The Constrained
-              Application Protocol (CoAP)", RFC 7252,
-              DOI 10.17487/RFC7252, June 2014,
-              <https://www.rfc-editor.org/info/rfc7252>.
-
-6.2.  Informative References
 
    [I-D.ietf-dots-signal-channel]
               Reddy, T., Boucadair, M., Patil, P., Mortensen, A., and N.
@@ -264,6 +257,13 @@ Authors' Addresses
    United Kingdom
 
    Email: jon.shallow@nccgroup.trust
+
+
+
+
+
+
+
 
 
 
