@@ -205,8 +205,8 @@ Internet-Draft            CoAP Hop Limit Option           September 2018
    Section 11.2 of [RFC7252].
 
    The diagnaostic payload of a TBA1 (Hop Limit Reached) error message
-   may leak sensitive information reavling the topology of a domain.  To
-   prevent that, a CoAP proxy which is located at the boundary of an
+   may leak sensitive information revealing the topology of a domain.
+   To prevent that, a CoAP proxy which is located at the boundary of an
    administrative domain MAY be instructed to strip the diagnostic
    payload or part of it before forwarding on the TBA1 response.
 
