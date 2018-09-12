@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="US-ASCII"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+<?rfc toc="yes"?>
+<?rfc tocompact="yes"?>
+<?rfc tocdepth="4"?>
+<?rfc tocindent="yes"?>
+<?rfc symrefs="yes"?>
+<?rfc sortrefs="yes"?>
+<?rfc comments="yes"?>
+<?rfc inline="yes"?>
+<?rfc compact="yes"?>
+<?rfc subcompact="no"?>
+<rfc category="std" docName="draft-boucadair-core-hop-limit-01"
+     ipr="trust200902">
+  <front>
+    <title abbrev="CoAP Hop Limit Option">Constrained Application Protocol
+    (CoAP) Hop Limit Option</title>
+
+    <author fullname="Mohamed Boucadair" initials="M." surname="Boucadair">
+      <organization>Orange</organization>
+
+      <address>
+        <postal>
+          <street></street>
+
+          <city>Rennes</city>
+
+          <region></region>
+
+          <code>35000</code>
+
+          <country>France</country>
+        </postal>
+
+        <email>mohamed.boucadair@orange.com</email>
+      </address>
+    </author>
+
+    <author fullname="Tirumaleswar Reddy" initials="T." surname="Reddy">
+      <organization abbrev="McAfee">McAfee, Inc.</organization>
+
+      <address>
+        <postal>
+          <street>Embassy Golf Link Business Park</street>
+
+          <city>Bangalore</city>
+
+          <region>Karnataka</region>
+
+          <code>560071</code>
+
+          <country>India</country>
+        </postal>
+
+        <email>kondtir@gmail.com</email>
+      </address>
+    </author>
+
+    <author fullname="Jon Shallow" initials="J." surname="Shallow">
+      <organization>NCC Group</organization>
+
+      <address>
+        <postal>
+          <street></street>
+
+          <city></city>
+
+          <region></region>
+
+          <code></code>
+
+          <country>United Kingdom</country>
+        </postal>
+
+        <email>jon.shallow@nccgroup.com</email>
+      </address>
+    </author>
+
+    <date />
+
+    <workgroup>CORE</workgroup>
+
+    <keyword>security</keyword>
+
+    <keyword>mitigation</keyword>
+
+    <keyword>service delivery</keyword>
+
+    <keyword>connectivity</keyword>
+
+    <keyword>anti-DDoS</keyword>
+
+    <keyword>automation</keyword>
+
+    <keyword>cooperation</keyword>
+
+    <keyword>Resilience</keyword>
+
+    <keyword>Filtering</keyword>
+
+    <keyword>Security Center</keyword>
+
+    <keyword>Mitigator</keyword>
+
+    <keyword>Scrubbing</keyword>
+
+    <keyword>dynamic service protection</keyword>
+
+    <keyword>dynamic mitigation</keyword>
+
+    <abstract>
+      <t>The presence of Constrained Application Protocol (CoAP) proxies may
+      lead to infinite forwarding loops, which is undesirable. To prevent and
+      detect such loops, this document specifies the Hop-Limit CoAP
+      option.</t>
+    </abstract>
+  </front>
+
+  <middle>
+    <section anchor="introduction" title="Introduction">
+      <t>More and more applications are using Constrained Application Protocol
+      (CoAP) <xref target="RFC7252"></xref> as a communication protocol
+      between involved application agents. For example, <xref
+      target="I-D.ietf-dots-signal-channel"></xref> specifies how CoAP is used
+      as a distributed denial-of-service (DDoS) attack signaling protocol
+      seeking for help from DDoS mitigation providers. In such contexts, a
+      CoAP client can communicate directly with a server or indirectly via a
+      proxy.</t>
+
+      <t>When multiple proxies are involved, infinite forwarding loops may be
+      experienced. To prevent such loops, this document defines a new CoAP
+      option, called Hop-Limit, which is inserted by on-path proxies. Also,
+      the document defines a new CoAP Response Code to report loops together
+      with relevant diagnostic information to ease troubleshooting.</t>
+    </section>
+
+    <section anchor="notation" title="Terminology">
+      <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+      "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
+      "OPTIONAL" in this document are to be interpreted as described in <xref
+      target="RFC2119"></xref>.</t>
+
+      <t>Readers should be familiar with the terms and concepts defined in
+      <xref target="RFC7252"></xref>.</t>
+    </section>
+
+    <section anchor="spec" title="Hop-Limit Option">
+      <t>Hop-Limit option (see <xref target="option"></xref>) is an elective
+      option used to detect and prevent infinite loops when proxies are
+      involved. Only one single instance of the option is allowed in a
+      message.</t>
+
+      <t>The value of the Hop-Limit option is encoded as an unsigned integer
+      (see Section 3.2 of <xref target="RFC7252"></xref>). This value can be
+      between 0 and 255 inclusive.</t>
+
+      <t>Each intermediate proxy involved in the handling of a CoAP message
+      MUST decrement the Hop-Limit option value by 1 prior to forwarding
+      upstream if this parameter exists, if the proxy understands the
+      Hop-Limit option. </t>
+
+      <t>The Hop-Limit option is safe to forward. That is, a CoAP proxy which
+      does not understand the Hop-Limit option should forward it on. </t>
+
+      <t>CoAP messages MUST NOT be forwarded if the Hop-Limit option is set to
+      '0' after decrement. Messages that cannot be forwarded because of
+      exhausted Hop-Limit SHOULD be logged with a TBA1 (Hop Limit Reached)
+      error message sent back to the CoAP peer. It is RECOMMENDED that CoAP
+      agents support means to alert administrators about loop errors so that
+      appropriate actions are undertaken.</t>
+
+      <t>To ease debugging and troubleshooting, the CoAP proxy which detects a
+      loop SHOULD include its information (e.g., server name, server alias, IP
+      address) in the diagnostic payload under the conditions detailed in
+      Section 5.5.2 of <xref target="RFC7252"></xref>.</t>
+
+      <t>Each intermediate proxy involved in relaying a TBA1 (Hop Limit
+      Reached) error message SHOULD prepend its own information in the
+      diagnostic payload with a space character used as separator. Only one
+      information per proxy MUST appear in the diagnostic payload.</t>
+
+      <t>The initial Hop-Limit value SHOULD be configurable. If no initial
+      value is explicitly provided, the default initial Hop-Limit value of 16
+      MUST be used. Because forwarding errors may occur if inadequate
+      Hop-Limit values are used, proxies at the boundaries of an
+      administrative domain MAY be instructed to remove or rewrite the value
+      of Hop-Limit carried in received messages (that is, ignore the value of
+      Hop-Limit received in a message).</t>
+    </section>
+
+    <section anchor="IANA" title="IANA Considerations">
+      <t></t>
+
+      <section anchor="code" title="CoAP Response Code">
+        <t>IANA is requested to add the following entries to the "CoAP
+        Response Codes" sub-registry available at
+        https://www.iana.org/assignments/core-parameters/core-parameters.xhtml#response-codes:</t>
+
+        <t><figure>
+            <artwork><![CDATA[                  +------+------------------+-----------+
+                  | Code | Description      | Reference |
+                  +------+------------------+-----------+
+                  | TBA1 | Hop Limit Reached| [RFCXXXX] |
+                  +------+------------------+-----------+
+
+                        Table 1: CoAP Response Codes]]></artwork>
+          </figure></t>
+      </section>
+
+      <section anchor="option" title="CoAP Option Number">
+        <t>IANA is requested to add the following entry to the "CoAP Option
+        Numbers" sub-registry available at
+        https://www.iana.org/assignments/core-parameters/core-parameters.xhtml#option-numbers:</t>
+
+        <t><figure>
+            <artwork><![CDATA[                  +--------+---+---+---+---+------------------+-----------+
+                  | Number | C | U | N | R | Name             | Reference |
+                  +--------+---+---+---+---+------------------+-----------+
+                  |  TBA2  |   |   | x |   | Hop-Limit        | [RFCXXXX] |
+                  +--------+---+---+---+---+------------------+-----------+
+                     C=Critical, U=Unsafe, N=NoCacheKey, R=Repeatable
+
+                            Table 2: CoAP Option Number]]></artwork>
+          </figure></t>
+
+        <t></t>
+      </section>
+    </section>
+
+    <section anchor="security" title="Security Considerations">
+      <t>Security considerations related to CoAP proxying are discussed in
+      Section 11.2 of <xref target="RFC7252"></xref>.</t>
+
+      <t>The diagnaostic payload of a TBA1 (Hop Limit Reached) error message
+      may leak sensitive information reavling the topology of a domain. To
+      prevent that, a CoAP proxy which is located at the boundary of an
+      administrative domain MAY be instructed to strip the diagnostic payload
+      or part of it before forwarding on the TBA1 response. </t>
+    </section>
+
+    <section anchor="ack" title="Acknowledgements">
+      <t>Thanks to Jim Schaad for the review.</t>
+    </section>
+  </middle>
+
+  <back>
+    <references title="Normative References">
+      <?rfc include="reference.RFC.2119"?>
+
+      <?rfc include="reference.RFC.7252"?>
+    </references>
+
+    <references title="Informative References">
+      <?rfc include="reference.I-D.ietf-dots-signal-channel"?>
+    </references>
+  </back>
+</rfc>
