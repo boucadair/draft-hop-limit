@@ -70,7 +70,7 @@ Table of Contents
      4.1.  CoAP Response Code  . . . . . . . . . . . . . . . . . . .   4
      4.2.  CoAP Option Number  . . . . . . . . . . . . . . . . . . .   4
    5.  Security Considerations . . . . . . . . . . . . . . . . . . .   4
-   6.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   4
+   6.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   5
    7.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   5
      7.1.  Normative References  . . . . . . . . . . . . . . . . . .   5
      7.2.  Informative References  . . . . . . . . . . . . . . . . .   5
@@ -130,11 +130,13 @@ Internet-Draft            CoAP Hop Limit Option           September 2018
 
    The initial Hop-Limit value SHOULD be configurable.  If no initial
    value is explicitly provided, the default initial Hop-Limit value of
-   16 MUST be used.  Because forwarding errors may occur if inadequate
-   Hop-Limit values are used, proxies at the boundaries of an
-   administrative domain MAY be instructed to remove or rewrite the
-   value of Hop-Limit carried in received messages (i.e., ignore the
-   value of Hop-Limit received in a message).
+   16 MUST be used.
+
+   Because forwarding errors may occur if inadequate Hop-Limit values
+   are used, proxies at the boundaries of an administrative domain MAY
+   be instructed to remove or rewrite the value of Hop-Limit carried in
+   received messages (i.e., ignore the value of Hop-Limit received in a
+   message).
 
    Otherwise, each intermediate proxy, which understands the Hop-Limit
    option, involved in the handling of a CoAP message MUST decrement the
@@ -160,8 +162,6 @@ Internet-Draft            CoAP Hop Limit Option           September 2018
    Reached) error message SHOULD prepend its own information in the
    diagnostic payload with a space character used as separator.  Only
    one information per proxy SHOULD appear in the diagnostic payload.
-   Doing so allows to limit the size of the TBA1 (Hop Limit Reached)
-   error message, and to ease correlation with hop counts.
 
 
 
@@ -169,6 +169,9 @@ Boucadair, et al.        Expires March 16, 2019                 [Page 3]
 
 Internet-Draft            CoAP Hop Limit Option           September 2018
 
+
+   Doing so allows to limit the size of the TBA1 (Hop Limit Reached)
+   error message, and to ease correlation with hop counts.
 
 4.  IANA Considerations
 
@@ -212,10 +215,7 @@ Internet-Draft            CoAP Hop Limit Option           September 2018
    administrative domain MAY be instructed to strip the diagnostic
    payload or part of it before forwarding on the TBA1 response.
 
-6.  Acknowledgements
 
-   This specification was part of [I-D.ietf-dots-signal-channel].  Many
-   thanks to those who reviewed DOTS specifications.
 
 
 
@@ -225,6 +225,11 @@ Boucadair, et al.        Expires March 16, 2019                 [Page 4]
 
 Internet-Draft            CoAP Hop Limit Option           September 2018
 
+
+6.  Acknowledgements
+
+   This specification was part of [I-D.ietf-dots-signal-channel].  Many
+   thanks to those who reviewed DOTS specifications.
 
    Thanks to Klaus Hartke, Carsten Bormann, Peter van der Stok, and Jim
    Schaad for the review.
@@ -269,11 +274,6 @@ Authors' Addresses
    India
 
    Email: kondtir@gmail.com
-
-
-
-
-
 
 
 

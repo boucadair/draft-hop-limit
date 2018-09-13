@@ -160,11 +160,13 @@
 
       <t>The initial Hop-Limit value SHOULD be configurable. If no initial
       value is explicitly provided, the default initial Hop-Limit value of 16
-      MUST be used. Because forwarding errors may occur if inadequate
-      Hop-Limit values are used, proxies at the boundaries of an
-      administrative domain MAY be instructed to remove or rewrite the value
-      of Hop-Limit carried in received messages (i.e., ignore the value of
-      Hop-Limit received in a message).</t>
+      MUST be used. </t>
+
+      <t>Because forwarding errors may occur if inadequate Hop-Limit values
+      are used, proxies at the boundaries of an administrative domain MAY be
+      instructed to remove or rewrite the value of Hop-Limit carried in
+      received messages (i.e., ignore the value of Hop-Limit received in a
+      message).</t>
 
       <t>Otherwise, each intermediate proxy, which understands the Hop-Limit
       option, involved in the handling of a CoAP message MUST decrement the
