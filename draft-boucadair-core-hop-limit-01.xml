@@ -152,7 +152,10 @@
 
       <t>The value of the Hop-Limit option is encoded as an unsigned integer
       (see Section 3.2 of <xref target="RFC7252"></xref>). This value MUST be
-      between 0 and 255 inclusive.</t>
+      between 1 and 255 inclusive.</t>
+
+      <t>The Hop-Limit option is safe to forward. That is, a CoAP proxy which
+      does not understand the Hop-Limit option should forward it on. </t>
 
       <t>If a CoAP proxy receives a request which does not include a Hop-Limit
       option, it SHOULD insert a Hop-Limit option when relaying the request to
@@ -173,9 +176,6 @@
       Hop-Limit option value by 1 prior to forwarding upstream if this
       parameter exists. </t>
 
-      <t>The Hop-Limit option is safe to forward. That is, a CoAP proxy which
-      does not understand the Hop-Limit option should forward it on. </t>
-
       <t>CoAP messages MUST NOT be forwarded if the Hop-Limit option is set to
       '0' after decrement. Messages that cannot be forwarded because of
       exhausted Hop-Limit SHOULD be logged with a TBA1 (Hop Limit Reached)
@@ -194,6 +194,9 @@
       information per proxy SHOULD appear in the diagnostic payload. Doing so
       allows to limit the size of the TBA1 (Hop Limit Reached) error message,
       and to ease correlation with hop counts. </t>
+
+      <t>CoAP messages received with a Hop-Limit option set to '0' MUST be
+      rejected by a CoAP agent using 4.00(Bad Request) error message. </t>
     </section>
 
     <section anchor="IANA" title="IANA Considerations">
