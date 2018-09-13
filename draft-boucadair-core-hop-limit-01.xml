@@ -154,7 +154,7 @@
       (see Section 3.2 of <xref target="RFC7252"></xref>). This value MUST be
       between 0 and 255 inclusive.</t>
 
-      <t>If a DOTS proxy receives a request which does not include a Hop-Limit
+      <t>If a CoAP proxy receives a request which does not include a Hop-Limit
       option, it SHOULD insert a Hop-Limit option when relaying the request to
       the next hop (absent explicit policy/configuration otherwise).</t>
 

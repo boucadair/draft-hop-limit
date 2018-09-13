@@ -124,7 +124,7 @@ Internet-Draft            CoAP Hop Limit Option           September 2018
    (see Section 3.2 of [RFC7252]).  This value MUST be between 0 and 255
    inclusive.
 
-   If a DOTS proxy receives a request which does not include a Hop-Limit
+   If a CoAP proxy receives a request which does not include a Hop-Limit
    option, it SHOULD insert a Hop-Limit option when relaying the request
    to the next hop (absent explicit policy/configuration otherwise).
 
@@ -217,7 +217,7 @@ Internet-Draft            CoAP Hop Limit Option           September 2018
    This specification was part of [I-D.ietf-dots-signal-channel].  Many
    thanks to those who reviewed DOTS specifications.
 
-   Thanks to Jim Schaad for the review.
+
 
 
 
@@ -225,6 +225,9 @@ Boucadair, et al.        Expires March 16, 2019                 [Page 4]
 
 Internet-Draft            CoAP Hop Limit Option           September 2018
 
+
+   Thanks to Klaus Hartke, Carsten Bormann, Peter van der Stok, and Jim
+   Schaad for the review.
 
 7.  References
 
@@ -268,6 +271,17 @@ Authors' Addresses
    Email: kondtir@gmail.com
 
 
+
+
+
+
+
+
+Boucadair, et al.        Expires March 16, 2019                 [Page 5]
+
+Internet-Draft            CoAP Hop Limit Option           September 2018
+
+
    Jon Shallow
    NCC Group
    United Kingdom
@@ -277,4 +291,46 @@ Authors' Addresses
 
 
 
-Boucadair, et al.        Expires March 16, 2019                 [Page 5]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Boucadair, et al.        Expires March 16, 2019                 [Page 6]
