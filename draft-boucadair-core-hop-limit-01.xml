@@ -156,7 +156,7 @@
 
       <t>If a CoAP proxy receives a request which does not include a Hop-Limit
       option, it SHOULD insert a Hop-Limit option when relaying the request to
-      the next hop (absent explicit policy/configuration otherwise).</t>
+      a next hop (absent explicit policy/configuration otherwise).</t>
 
       <t>The initial Hop-Limit value SHOULD be configurable. If no initial
       value is explicitly provided, the default initial Hop-Limit value of 16
