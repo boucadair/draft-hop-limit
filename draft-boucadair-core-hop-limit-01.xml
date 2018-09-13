@@ -151,13 +151,25 @@
       message.</t>
 
       <t>The value of the Hop-Limit option is encoded as an unsigned integer
-      (see Section 3.2 of <xref target="RFC7252"></xref>). This value can be
+      (see Section 3.2 of <xref target="RFC7252"></xref>). This value MUST be
       between 0 and 255 inclusive.</t>
 
-      <t>Each intermediate proxy involved in the handling of a CoAP message
-      MUST decrement the Hop-Limit option value by 1 prior to forwarding
-      upstream if this parameter exists, if the proxy understands the
-      Hop-Limit option. </t>
+      <t>If a DOTS proxy receives a request which does not include a Hop-Limit
+      option, it SHOULD insert a Hop-Limit option when relaying the request to
+      the next hop (absent explicit policy/configuration otherwise).</t>
+
+      <t>The initial Hop-Limit value SHOULD be configurable. If no initial
+      value is explicitly provided, the default initial Hop-Limit value of 16
+      MUST be used. Because forwarding errors may occur if inadequate
+      Hop-Limit values are used, proxies at the boundaries of an
+      administrative domain MAY be instructed to remove or rewrite the value
+      of Hop-Limit carried in received messages (i.e., ignore the value of
+      Hop-Limit received in a message).</t>
+
+      <t>Otherwise, each intermediate proxy, which understands the Hop-Limit
+      option, involved in the handling of a CoAP message MUST decrement the
+      Hop-Limit option value by 1 prior to forwarding upstream if this
+      parameter exists. </t>
 
       <t>The Hop-Limit option is safe to forward. That is, a CoAP proxy which
       does not understand the Hop-Limit option should forward it on. </t>
@@ -177,15 +189,9 @@
       <t>Each intermediate proxy involved in relaying a TBA1 (Hop Limit
       Reached) error message SHOULD prepend its own information in the
       diagnostic payload with a space character used as separator. Only one
-      information per proxy MUST appear in the diagnostic payload.</t>
-
-      <t>The initial Hop-Limit value SHOULD be configurable. If no initial
-      value is explicitly provided, the default initial Hop-Limit value of 16
-      MUST be used. Because forwarding errors may occur if inadequate
-      Hop-Limit values are used, proxies at the boundaries of an
-      administrative domain MAY be instructed to remove or rewrite the value
-      of Hop-Limit carried in received messages (that is, ignore the value of
-      Hop-Limit received in a message).</t>
+      information per proxy SHOULD appear in the diagnostic payload. Doing so
+      allows to limit the size of the TBA1 (Hop Limit Reached) error message,
+      and to ease correlation with hop counts. </t>
     </section>
 
     <section anchor="IANA" title="IANA Considerations">
@@ -231,7 +237,7 @@
       <t>Security considerations related to CoAP proxying are discussed in
       Section 11.2 of <xref target="RFC7252"></xref>.</t>
 
-      <t>The diagnaostic payload of a TBA1 (Hop Limit Reached) error message
+      <t>The diagnostic payload of a TBA1 (Hop Limit Reached) error message
       may leak sensitive information revealing the topology of a domain. To
       prevent that, a CoAP proxy which is located at the boundary of an
       administrative domain MAY be instructed to strip the diagnostic payload
@@ -239,6 +245,10 @@
     </section>
 
     <section anchor="ack" title="Acknowledgements">
+      <t>This specification was part of <xref
+      target="I-D.ietf-dots-signal-channel"></xref>. Many thanks to those who
+      reviewed DOTS specifications. </t>
+
       <t>Thanks to Jim Schaad for the review.</t>
     </section>
   </middle>
