@@ -152,7 +152,7 @@
       <t>Hop-Limit option (see <xref target="option"></xref>) is an elective
       option used to detect and prevent infinite loops when proxies are
       involved. Only one single instance of the option is allowed in a
-      message. Therefore, a message carrying multiple Hop-Limit option
+      message. Therefore, any message carrying multiple Hop-Limit option
       instances MUST be rejected using 4.00 (Bad Request) error message.</t>
 
       <t>The value of the Hop-Limit option is encoded as an 8-bit unsigned
@@ -181,7 +181,9 @@
       are used, proxies at the boundaries of an administrative domain MAY be
       instructed to remove or rewrite the value of Hop-Limit carried in
       received messages (i.e., ignore the value of Hop-Limit received in a
-      message).</t>
+      message). This modification should be done with caution in case proxy
+      forwarded traffic repeatedly crosses the administrative domain boundary
+      in a loop and so Hop-Limit detection gets broken.</t>
 
       <t>Otherwise, each intermediate proxy, which understands the Hop-Limit
       option, involved in the handling of a CoAP message MUST decrement the
@@ -252,10 +254,11 @@
       Section 11.2 of <xref target="RFC7252"></xref>.</t>
 
       <t>The diagnostic payload of a TBA1 (Hop Limit Reached) error message
-      may leak sensitive information revealing the topology of a domain. To
-      prevent that, a CoAP proxy which is located at the boundary of an
-      administrative domain MAY be instructed to strip the diagnostic payload
-      or part of it before forwarding on the TBA1 response. </t>
+      may leak sensitive information revealing the topology of an
+      administrative domain. To prevent that, a CoAP proxy which is located at
+      the boundary of an administrative domain MAY be instructed to strip the
+      diagnostic payload or part of it before forwarding on the TBA1 response.
+      </t>
     </section>
 
     <section anchor="ack" title="Acknowledgements">
