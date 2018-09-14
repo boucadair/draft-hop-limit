@@ -5,10 +5,10 @@
 CORE                                                        M. Boucadair
 Internet-Draft                                                    Orange
 Intended status: Standards Track                                T. Reddy
-Expires: March 17, 2019                                           McAfee
+Expires: March 18, 2019                                           McAfee
                                                               J. Shallow
                                                                NCC Group
-                                                      September 13, 2018
+                                                      September 14, 2018
 
 
         Constrained Application Protocol (CoAP) Hop Limit Option
@@ -36,7 +36,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on March 17, 2019.
+   This Internet-Draft will expire on March 18, 2019.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Boucadair, et al.        Expires March 17, 2019                 [Page 1]
+Boucadair, et al.        Expires March 18, 2019                 [Page 1]
 
 Internet-Draft            CoAP Hop Limit Option           September 2018
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Boucadair, et al.        Expires March 17, 2019                 [Page 2]
+Boucadair, et al.        Expires March 18, 2019                 [Page 2]
 
 Internet-Draft            CoAP Hop Limit Option           September 2018
 
@@ -119,14 +119,14 @@ Internet-Draft            CoAP Hop Limit Option           September 2018
    Hop-Limit option (see Section 4.2) is an elective option used to
    detect and prevent infinite loops when proxies are involved.  Only
    one single instance of the option is allowed in a message.
-   Therefore, messages carrying multiple Hop-Limit option instances MUST
-   be rejected using 4.00 (Bad Request) error message.
+   Therefore, a message carrying multiple Hop-Limit option instances
+   MUST be rejected using 4.00 (Bad Request) error message.
 
    The value of the Hop-Limit option is encoded as an 8-bit unsigned
    integer (see Section 3.2 of [RFC7252]).  This value MUST be between 1
    and 255 inclusive.  CoAP messages received with a Hop-Limit option
    set to '0' or greater than '255' MUST be rejected by a CoAP agent
-   using 4.00 (Bad Request) error message.
+   using 4.00 (Bad Request).
 
    The Hop-Limit option is safe to forward.  That is, a CoAP proxy which
    does not understand the Hop-Limit option should forward it on.
@@ -165,7 +165,7 @@ Internet-Draft            CoAP Hop Limit Option           September 2018
 
 
 
-Boucadair, et al.        Expires March 17, 2019                 [Page 3]
+Boucadair, et al.        Expires March 18, 2019                 [Page 3]
 
 Internet-Draft            CoAP Hop Limit Option           September 2018
 
@@ -221,7 +221,7 @@ Internet-Draft            CoAP Hop Limit Option           September 2018
 
 
 
-Boucadair, et al.        Expires March 17, 2019                 [Page 4]
+Boucadair, et al.        Expires March 18, 2019                 [Page 4]
 
 Internet-Draft            CoAP Hop Limit Option           September 2018
 
@@ -277,7 +277,7 @@ Authors' Addresses
 
 
 
-Boucadair, et al.        Expires March 17, 2019                 [Page 5]
+Boucadair, et al.        Expires March 18, 2019                 [Page 5]
 
 Internet-Draft            CoAP Hop Limit Option           September 2018
 
@@ -333,4 +333,4 @@ Internet-Draft            CoAP Hop Limit Option           September 2018
 
 
 
-Boucadair, et al.        Expires March 17, 2019                 [Page 6]
+Boucadair, et al.        Expires March 18, 2019                 [Page 6]
