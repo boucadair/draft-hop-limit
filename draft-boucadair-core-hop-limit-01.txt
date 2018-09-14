@@ -149,7 +149,7 @@ Internet-Draft            CoAP Hop Limit Option           September 2018
    be instructed to remove or rewrite the value of Hop-Limit carried in
    received messages (i.e., ignore the value of Hop-Limit received in a
    message).  This modification should be done with caution in case
-   proxy forwarded traffic repeatedly crosses the administrative domain
+   proxy-forwarded traffic repeatedly crosses the administrative domain
    boundary in a loop and so Hop-Limit detection gets broken.
 
    Otherwise, each intermediate proxy, which understands the Hop-Limit

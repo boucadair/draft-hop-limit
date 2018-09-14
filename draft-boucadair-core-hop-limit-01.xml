@@ -181,9 +181,9 @@
       are used, proxies at the boundaries of an administrative domain MAY be
       instructed to remove or rewrite the value of Hop-Limit carried in
       received messages (i.e., ignore the value of Hop-Limit received in a
-      message). This modification should be done with caution in case proxy
-      forwarded traffic repeatedly crosses the administrative domain boundary
-      in a loop and so Hop-Limit detection gets broken.</t>
+      message). This modification should be done with caution in case
+      proxy-forwarded traffic repeatedly crosses the administrative domain
+      boundary in a loop and so Hop-Limit detection gets broken.</t>
 
       <t>Otherwise, each intermediate proxy, which understands the Hop-Limit
       option, involved in the handling of a CoAP message MUST decrement the
