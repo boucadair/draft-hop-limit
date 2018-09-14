@@ -124,8 +124,8 @@
       target="I-D.ietf-dots-signal-channel"></xref> specifies how CoAP is used
       as a distributed denial-of-service (DDoS) attack signaling protocol
       seeking for help from DDoS mitigation providers. In such contexts, a
-      CoAP client can communicate directly with a server or indirectly via a
-      proxy.</t>
+      CoAP client can communicate directly with a server or indirectly via
+      proxies.</t>
 
       <t>When multiple proxies are involved, infinite forwarding loops may be
       experienced. To prevent such loops, this document defines a new CoAP
@@ -150,9 +150,9 @@
       involved. Only one single instance of the option is allowed in a
       message.</t>
 
-      <t>The value of the Hop-Limit option is encoded as an unsigned integer
-      (see Section 3.2 of <xref target="RFC7252"></xref>). This value MUST be
-      between 1 and 255 inclusive.</t>
+      <t>The value of the Hop-Limit option is encoded as an 8-bit unsigned
+      integer (see Section 3.2 of <xref target="RFC7252"></xref>). This value
+      MUST be between 1 and 255 inclusive.</t>
 
       <t>The Hop-Limit option is safe to forward. That is, a CoAP proxy which
       does not understand the Hop-Limit option should forward it on. </t>
@@ -163,7 +163,12 @@
 
       <t>The initial Hop-Limit value SHOULD be configurable. If no initial
       value is explicitly provided, the default initial Hop-Limit value of 16
-      MUST be used. </t>
+      MUST be used. This value is chosen to be sufficiently large to guarantee
+      that a CoAP request would not be dropped in networks when there were no
+      loops, but not so large as to consume CoAP proxy resources when a loop
+      does occur. Lower values should be used with caution and only in
+      networks where topologies are known by the CoAP agent inserting the
+      Hop-Limit option. </t>
 
       <t>Because forwarding errors may occur if inadequate Hop-Limit values
       are used, proxies at the boundaries of an administrative domain MAY be
@@ -193,10 +198,11 @@
       diagnostic payload with a space character used as separator. Only one
       information per proxy SHOULD appear in the diagnostic payload. Doing so
       allows to limit the size of the TBA1 (Hop Limit Reached) error message,
-      and to ease correlation with hop counts. </t>
+      and to ease correlation with hops count. </t>
 
-      <t>CoAP messages received with a Hop-Limit option set to '0' MUST be
-      rejected by a CoAP agent using 4.00(Bad Request) error message. </t>
+      <t>CoAP messages received with a Hop-Limit option set to '0' or greater
+      than '255' MUST be rejected by a CoAP agent using 4.00 (Bad Request)
+      error message. </t>
     </section>
 
     <section anchor="IANA" title="IANA Considerations">
