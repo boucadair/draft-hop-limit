@@ -245,7 +245,7 @@
       to the next hop without updating the diagnostic payload.</t>
     </section>
 
-    <section title="HTTP Mappings">
+    <section title="HTTP-Mapping Considerations">
       <t>This section focuses on the HTTP mappings specific to the CoAP
       extension specified in this document. As a reminder, the basic normative
       requirements on HTTP-to-CoAP mappings are defined in Section 10.2 of

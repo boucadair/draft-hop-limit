@@ -67,7 +67,7 @@ Table of Contents
      1.1.  Intended Usage  . . . . . . . . . . . . . . . . . . . . .   2
    2.  Terminology . . . . . . . . . . . . . . . . . . . . . . . . .   3
    3.  Hop-Limit Option  . . . . . . . . . . . . . . . . . . . . . .   3
-   4.  HTTP Mappings . . . . . . . . . . . . . . . . . . . . . . . .   5
+   4.  HTTP-Mapping Considerations . . . . . . . . . . . . . . . . .   5
    5.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   5
      5.1.  CoAP Response Code  . . . . . . . . . . . . . . . . . . .   5
      5.2.  CoAP Option Number  . . . . . . . . . . . . . . . . . . .   5
@@ -229,7 +229,7 @@ Internet-Draft            CoAP Hop Limit Option                June 2019
    error message to the next hop without updating the diagnostic
    payload.
 
-4.  HTTP Mappings
+4.  HTTP-Mapping Considerations
 
    This section focuses on the HTTP mappings specific to the CoAP
    extension specified in this document.  As a reminder, the basic
