@@ -13,7 +13,7 @@
 <rfc category="std" docName="draft-ietf-core-hop-limit-04" ipr="trust200902">
   <front>
     <title abbrev="CoAP Hop Limit Option">Constrained Application Protocol
-    (CoAP) Hop Limit Option</title>
+    (CoAP) Hop-Limit Option</title>
 
     <author fullname="Mohamed Boucadair" initials="M." surname="Boucadair">
       <organization>Orange</organization>
@@ -133,6 +133,20 @@
       new CoAP Response Code (<xref target="code"></xref>) to report loops
       together with relevant diagnostic information to ease
       troubleshooting.</t>
+
+      <section title="Intended Usage">
+        <t>The Hop-Limit option has originally been designed for a specific
+        use case <xref target="I-D.ietf-dots-signal-channel"></xref>. However,
+        its intended usage is general: CoAP proxies that do not have specific
+        knowledge that proxy forwarding loops are avoided in some other way,
+        are expected to implement this option and have it enabled by
+        default.</t>
+
+        <t>Note that this means that a server that receives requests both via
+        proxies and directly from clients may see otherwise identical requests
+        with and without the Hop-Limit option included; servers with internal
+        caching will therefore also want to implement this option. </t>
+      </section>
     </section>
 
     <section anchor="notation" title="Terminology">
@@ -225,14 +239,15 @@
       information per proxy SHOULD appear in the diagnostic payload. Doing so
       allows to limit the size of the TBA1 (Hop Limit Reached) error message,
       and to ease correlation with hops count. Note that an intermediate proxy
-      prepends its information only if there is enough space. If not, an
+      prepends its information only if there is enough space as determined by
+      the Path MTU (Section 4.6 of <xref target="RFC7252"></xref>). If not, an
       intermediate proxy forwards the TBA1 (Hop Limit Reached) error message
       to the next hop without updating the diagnostic payload.</t>
     </section>
 
     <section title="HTTP Mappings">
       <t>This section focuses on the HTTP mappings specific to the CoAP
-      extension specified in this document. As a reminded, the basic normative
+      extension specified in this document. As a reminder, the basic normative
       requirements on HTTP-to-CoAP mappings are defined in Section 10.2 of
       <xref target="RFC7252"></xref>. The generic guidelines for HTTP/CoAP
       mappings are elaborated in <xref target="RFC8075"></xref>. </t>
@@ -266,7 +281,7 @@
       Table 1: CoAP Response Codes]]></artwork>
           </figure></t>
 
-        <t>This document suggests 5.06 as a code to be assigned for the new
+        <t>This document suggests 5.08 as a code to be assigned for the new
         response code. <list style="empty">
             <t>Editorial Note: Please update TBA1 statements within the
             document with the assigned code.</t>

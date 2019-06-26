@@ -10,7 +10,7 @@ Expires: December 28, 2019                                        McAfee
                                                            June 26, 2019
 
 
-        Constrained Application Protocol (CoAP) Hop Limit Option
+        Constrained Application Protocol (CoAP) Hop-Limit Option
                       draft-ietf-core-hop-limit-04
 
 Abstract
@@ -64,17 +64,18 @@ Internet-Draft            CoAP Hop Limit Option                June 2019
 Table of Contents
 
    1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
-   2.  Terminology . . . . . . . . . . . . . . . . . . . . . . . . .   2
+     1.1.  Intended Usage  . . . . . . . . . . . . . . . . . . . . .   2
+   2.  Terminology . . . . . . . . . . . . . . . . . . . . . . . . .   3
    3.  Hop-Limit Option  . . . . . . . . . . . . . . . . . . . . . .   3
-   4.  HTTP Mappings . . . . . . . . . . . . . . . . . . . . . . . .   4
+   4.  HTTP Mappings . . . . . . . . . . . . . . . . . . . . . . . .   5
    5.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   5
      5.1.  CoAP Response Code  . . . . . . . . . . . . . . . . . . .   5
      5.2.  CoAP Option Number  . . . . . . . . . . . . . . . . . . .   5
-   6.  Security Considerations . . . . . . . . . . . . . . . . . . .   5
+   6.  Security Considerations . . . . . . . . . . . . . . . . . . .   6
    7.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   6
    8.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   6
      8.1.  Normative References  . . . . . . . . . . . . . . . . . .   6
-     8.2.  Informative References  . . . . . . . . . . . . . . . . .   6
+     8.2.  Informative References  . . . . . . . . . . . . . . . . .   7
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .   7
 
 1.  Introduction
@@ -95,6 +96,27 @@ Table of Contents
    Response Code (Section 5.1) to report loops together with relevant
    diagnostic information to ease troubleshooting.
 
+1.1.  Intended Usage
+
+   The Hop-Limit option has originally been designed for a specific use
+   case [I-D.ietf-dots-signal-channel].  However, its intended usage is
+   general: CoAP proxies that do not have specific knowledge that proxy
+   forwarding loops are avoided in some other way, are expected to
+   implement this option and have it enabled by default.
+
+   Note that this means that a server that receives requests both via
+   proxies and directly from clients may see otherwise identical
+
+
+
+Boucadair, et al.       Expires December 28, 2019               [Page 2]
+
+Internet-Draft            CoAP Hop Limit Option                June 2019
+
+
+   requests with and without the Hop-Limit option included; servers with
+   internal caching will therefore also want to implement this option.
+
 2.  Terminology
 
    The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
@@ -105,14 +127,6 @@ Table of Contents
 
    Readers should be familiar with the terms and concepts defined in
    [RFC7252].
-
-
-
-
-Boucadair, et al.       Expires December 28, 2019               [Page 2]
-
-Internet-Draft            CoAP Hop Limit Option                June 2019
-
 
 3.  Hop-Limit Option
 
@@ -148,6 +162,14 @@ Internet-Draft            CoAP Hop Limit Option                June 2019
    16 MUST be used.  This value is chosen to be sufficiently large to
    guarantee that a CoAP request would not be dropped in networks when
    there were no loops, but not so large as to consume CoAP proxy
+
+
+
+Boucadair, et al.       Expires December 28, 2019               [Page 3]
+
+Internet-Draft            CoAP Hop Limit Option                June 2019
+
+
    resources when a loop does occur.  Lower values should be used with
    caution and only in networks where topologies are known by the CoAP
    client (or proxy) inserting the Hop-Limit option.
@@ -162,14 +184,6 @@ Internet-Draft            CoAP Hop Limit Option                June 2019
 
    Otherwise, a CoAP proxy which understands the Hop-Limit option MUST
    decrement the value of the option by 1 prior to forwarding it.  A
-
-
-
-Boucadair, et al.       Expires December 28, 2019               [Page 3]
-
-Internet-Draft            CoAP Hop Limit Option                June 2019
-
-
    CoAP proxy which understands the Hop-Limit option MUST NOT use a
    stored TBA1 (Hop Limit Reached) error response unless the value of
    the Hop-Limit option in the presented request is less than or equal
@@ -202,14 +216,23 @@ Internet-Draft            CoAP Hop Limit Option                June 2019
    Doing so allows to limit the size of the TBA1 (Hop Limit Reached)
    error message, and to ease correlation with hops count.  Note that an
    intermediate proxy prepends its information only if there is enough
-   space.  If not, an intermediate proxy forwards the TBA1 (Hop Limit
-   Reached) error message to the next hop without updating the
-   diagnostic payload.
+   space as determined by the Path MTU (Section 4.6 of [RFC7252]).  If
+   not, an intermediate proxy forwards the TBA1 (Hop Limit Reached)
+
+
+
+Boucadair, et al.       Expires December 28, 2019               [Page 4]
+
+Internet-Draft            CoAP Hop Limit Option                June 2019
+
+
+   error message to the next hop without updating the diagnostic
+   payload.
 
 4.  HTTP Mappings
 
    This section focuses on the HTTP mappings specific to the CoAP
-   extension specified in this document.  As a reminded, the basic
+   extension specified in this document.  As a reminder, the basic
    normative requirements on HTTP-to-CoAP mappings are defined in
    Section 10.2 of [RFC7252].  The generic guidelines for HTTP/CoAP
    mappings are elaborated in [RFC8075].
@@ -218,13 +241,6 @@ Internet-Draft            CoAP Hop Limit Option                June 2019
    following the guidelines in Section 3.  Optionally, the HTTP-to-CoAP
    Proxy may be instructed by policy to insert a Hop-Limit option only
    if a 'Via' header is present in the HTTP request.
-
-
-
-Boucadair, et al.       Expires December 28, 2019               [Page 4]
-
-Internet-Draft            CoAP Hop Limit Option                June 2019
-
 
    The HTTP-to-CoAP Proxy uses 508 (Loop Detected) as the HTTP response
    status code to map TBA1 (Hop Limit Reached).  Furthermore, it maps
@@ -247,7 +263,7 @@ Internet-Draft            CoAP Hop Limit Option                June 2019
 
                         Table 1: CoAP Response Codes
 
-   This document suggests 5.06 as a code to be assigned for the new
+   This document suggests 5.08 as a code to be assigned for the new
    response code.
 
       Editorial Note: Please update TBA1 statements within the document
@@ -258,6 +274,13 @@ Internet-Draft            CoAP Hop Limit Option                June 2019
    IANA is requested to add the following entry to the "CoAP Option
    Numbers" sub-registry available at https://www.iana.org/assignments/
    core-parameters/core-parameters.xhtml#option-numbers:
+
+
+
+Boucadair, et al.       Expires December 28, 2019               [Page 5]
+
+Internet-Draft            CoAP Hop Limit Option                June 2019
+
 
          +--------+---+---+---+---+------------------+-----------+
          | Number | C | U | N | R | Name             | Reference |
@@ -272,15 +295,6 @@ Internet-Draft            CoAP Hop Limit Option                June 2019
 
    Security considerations related to CoAP proxying are discussed in
    Section 11.2 of [RFC7252].
-
-
-
-
-
-Boucadair, et al.       Expires December 28, 2019               [Page 5]
-
-Internet-Draft            CoAP Hop Limit Option                June 2019
-
 
    The diagnostic payload of a TBA1 (Hop Limit Reached) error message
    may leak sensitive information revealing the topology of an
@@ -315,6 +329,15 @@ Internet-Draft            CoAP Hop Limit Option                June 2019
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/info/rfc8174>.
 
+
+
+
+
+Boucadair, et al.       Expires December 28, 2019               [Page 6]
+
+Internet-Draft            CoAP Hop Limit Option                June 2019
+
+
 8.2.  Informative References
 
    [I-D.ietf-dots-signal-channel]
@@ -328,15 +351,6 @@ Internet-Draft            CoAP Hop Limit Option                June 2019
               the Constrained Application Protocol (CoAP)", RFC 8075,
               DOI 10.17487/RFC8075, February 2017,
               <https://www.rfc-editor.org/info/rfc8075>.
-
-
-
-
-
-Boucadair, et al.       Expires December 28, 2019               [Page 6]
-
-Internet-Draft            CoAP Hop Limit Option                June 2019
-
 
 Authors' Addresses
 
@@ -361,20 +375,6 @@ Authors' Addresses
    United Kingdom
 
    Email: supjps-ietf@jpshallow.com
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
