@@ -242,7 +242,7 @@
       HTTP-to-CoAP Proxy may be instructed by policy to insert a Hop-Limit
       option only if a 'Via' header is present in the HTTP request.</t>
 
-      <t>The HTTP-to-CoAP Proxy uses 506 (Loop Detected) as the HTTP response
+      <t>The HTTP-to-CoAP Proxy uses 508 (Loop Detected) as the HTTP response
       status code to map TBA1 (Hop Limit Reached). Furthermore, it maps the
       diagnostic payload of TBA1 (Hop Limit Reached) as per Section 6.6 of
       <xref target="RFC8075"></xref>.</t>

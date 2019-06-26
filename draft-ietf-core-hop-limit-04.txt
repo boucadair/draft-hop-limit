@@ -226,7 +226,7 @@ Boucadair, et al.       Expires December 28, 2019               [Page 4]
 Internet-Draft            CoAP Hop Limit Option                June 2019
 
 
-   The HTTP-to-CoAP Proxy uses 506 (Loop Detected) as the HTTP response
+   The HTTP-to-CoAP Proxy uses 508 (Loop Detected) as the HTTP response
    status code to map TBA1 (Hop Limit Reached).  Furthermore, it maps
    the diagnostic payload of TBA1 (Hop Limit Reached) as per Section 6.6
    of [RFC8075].
