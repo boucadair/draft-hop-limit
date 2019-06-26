@@ -5,9 +5,9 @@
 CORE                                                        M. Boucadair
 Internet-Draft                                                    Orange
 Intended status: Standards Track                                T. Reddy
-Expires: December 27, 2019                                        McAfee
+Expires: December 28, 2019                                        McAfee
                                                               J. Shallow
-                                                           June 25, 2019
+                                                           June 26, 2019
 
 
         Constrained Application Protocol (CoAP) Hop Limit Option
@@ -35,7 +35,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on December 27, 2019.
+   This Internet-Draft will expire on December 28, 2019.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Boucadair, et al.       Expires December 27, 2019               [Page 1]
+Boucadair, et al.       Expires December 28, 2019               [Page 1]
 
 Internet-Draft            CoAP Hop Limit Option                June 2019
 
@@ -66,15 +66,16 @@ Table of Contents
    1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
    2.  Terminology . . . . . . . . . . . . . . . . . . . . . . . . .   2
    3.  Hop-Limit Option  . . . . . . . . . . . . . . . . . . . . . .   3
-   4.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   4
-     4.1.  CoAP Response Code  . . . . . . . . . . . . . . . . . . .   4
-     4.2.  CoAP Option Number  . . . . . . . . . . . . . . . . . . .   5
-   5.  Security Considerations . . . . . . . . . . . . . . . . . . .   5
-   6.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   5
-   7.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   6
-     7.1.  Normative References  . . . . . . . . . . . . . . . . . .   6
-     7.2.  Informative References  . . . . . . . . . . . . . . . . .   6
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .   6
+   4.  HTTP Mappings . . . . . . . . . . . . . . . . . . . . . . . .   4
+   5.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   5
+     5.1.  CoAP Response Code  . . . . . . . . . . . . . . . . . . .   5
+     5.2.  CoAP Option Number  . . . . . . . . . . . . . . . . . . .   5
+   6.  Security Considerations . . . . . . . . . . . . . . . . . . .   5
+   7.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   6
+   8.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   6
+     8.1.  Normative References  . . . . . . . . . . . . . . . . . .   6
+     8.2.  Informative References  . . . . . . . . . . . . . . . . .   6
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .   7
 
 1.  Introduction
 
@@ -91,7 +92,7 @@ Table of Contents
    experienced (e.g., routing misconfiguration, policy conflicts).  To
    prevent such loops, this document defines a new CoAP option, called
    Hop-Limit (Section 3).  Also, the document defines a new CoAP
-   Response Code (Section 4.1) to report loops together with relevant
+   Response Code (Section 5.1) to report loops together with relevant
    diagnostic information to ease troubleshooting.
 
 2.  Terminology
@@ -108,15 +109,14 @@ Table of Contents
 
 
 
-
-Boucadair, et al.       Expires December 27, 2019               [Page 2]
+Boucadair, et al.       Expires December 28, 2019               [Page 2]
 
 Internet-Draft            CoAP Hop Limit Option                June 2019
 
 
 3.  Hop-Limit Option
 
-   The Hop-Limit option (see Section 4.2) is an elective option used to
+   The Hop-Limit option (see Section 5.2) is an elective option used to
    detect and prevent infinite loops when proxies are involved.  The
    option is not repeatable.  Therefore, any message carrying multiple
    Hop-Limit options MUST be handled following the procedure specified
@@ -165,7 +165,7 @@ Internet-Draft            CoAP Hop Limit Option                June 2019
 
 
 
-Boucadair, et al.       Expires December 27, 2019               [Page 3]
+Boucadair, et al.       Expires December 28, 2019               [Page 3]
 
 Internet-Draft            CoAP Hop Limit Option                June 2019
 
@@ -206,25 +206,38 @@ Internet-Draft            CoAP Hop Limit Option                June 2019
    Reached) error message to the next hop without updating the
    diagnostic payload.
 
-4.  IANA Considerations
+4.  HTTP Mappings
 
-4.1.  CoAP Response Code
+   This section focuses on the HTTP mappings specific to the CoAP
+   extension specified in this document.  As a reminded, the basic
+   normative requirements on HTTP-to-CoAP mappings are defined in
+   Section 10.2 of [RFC7252].  The generic guidelines for HTTP/CoAP
+   mappings are elaborated in [RFC8075].
+
+   By default, the HTTP-to-CoAP Proxy inserts a Hop-Limit option
+   following the guidelines in Section 3.  Optionally, the HTTP-to-CoAP
+   Proxy may be instructed by policy to insert a Hop-Limit option only
+   if a 'Via' header is present in the HTTP request.
+
+
+
+Boucadair, et al.       Expires December 28, 2019               [Page 4]
+
+Internet-Draft            CoAP Hop Limit Option                June 2019
+
+
+   The HTTP-to-CoAP Proxy uses 506 (Loop Detected) as the HTTP response
+   status code to map TBA1 (Hop Limit Reached).  Furthermore, it maps
+   the diagnostic payload of TBA1 (Hop Limit Reached) as per Section 6.6
+   of [RFC8075].
+
+5.  IANA Considerations
+
+5.1.  CoAP Response Code
 
    IANA is requested to add the following entry to the "CoAP Response
    Codes" sub-registry available at https://www.iana.org/assignments/
    core-parameters/core-parameters.xhtml#response-codes:
-
-
-
-
-
-
-
-
-Boucadair, et al.       Expires December 27, 2019               [Page 4]
-
-Internet-Draft            CoAP Hop Limit Option                June 2019
-
 
                   +------+------------------+-----------+
                   | Code | Description      | Reference |
@@ -240,7 +253,7 @@ Internet-Draft            CoAP Hop Limit Option                June 2019
       Editorial Note: Please update TBA1 statements within the document
       with the assigned code.
 
-4.2.  CoAP Option Number
+5.2.  CoAP Option Number
 
    IANA is requested to add the following entry to the "CoAP Option
    Numbers" sub-registry available at https://www.iana.org/assignments/
@@ -255,10 +268,19 @@ Internet-Draft            CoAP Hop Limit Option                June 2019
 
                   Table 2: CoAP Option Number
 
-5.  Security Considerations
+6.  Security Considerations
 
    Security considerations related to CoAP proxying are discussed in
    Section 11.2 of [RFC7252].
+
+
+
+
+
+Boucadair, et al.       Expires December 28, 2019               [Page 5]
+
+Internet-Draft            CoAP Hop Limit Option                June 2019
+
 
    The diagnostic payload of a TBA1 (Hop Limit Reached) error message
    may leak sensitive information revealing the topology of an
@@ -267,7 +289,7 @@ Internet-Draft            CoAP Hop Limit Option                June 2019
    to strip the diagnostic payload or part of it before forwarding on
    the TBA1 response.
 
-6.  Acknowledgements
+7.  Acknowledgements
 
    This specification was part of [I-D.ietf-dots-signal-channel].  Many
    thanks to those who reviewed DOTS specifications.
@@ -275,16 +297,9 @@ Internet-Draft            CoAP Hop Limit Option                June 2019
    Thanks to Klaus Hartke, Carsten Bormann, Peter van der Stok, and Jim
    Schaad for the reviews.
 
+8.  References
 
-
-Boucadair, et al.       Expires December 27, 2019               [Page 5]
-
-Internet-Draft            CoAP Hop Limit Option                June 2019
-
-
-7.  References
-
-7.1.  Normative References
+8.1.  Normative References
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -300,13 +315,28 @@ Internet-Draft            CoAP Hop Limit Option                June 2019
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/info/rfc8174>.
 
-7.2.  Informative References
+8.2.  Informative References
 
    [I-D.ietf-dots-signal-channel]
               K, R., Boucadair, M., Patil, P., Mortensen, A., and N.
               Teague, "Distributed Denial-of-Service Open Threat
               Signaling (DOTS) Signal Channel Specification", draft-
               ietf-dots-signal-channel-34 (work in progress), May 2019.
+
+   [RFC8075]  Castellani, A., Loreto, S., Rahman, A., Fossati, T., and
+              E. Dijk, "Guidelines for Mapping Implementations: HTTP to
+              the Constrained Application Protocol (CoAP)", RFC 8075,
+              DOI 10.17487/RFC8075, February 2017,
+              <https://www.rfc-editor.org/info/rfc8075>.
+
+
+
+
+
+Boucadair, et al.       Expires December 28, 2019               [Page 6]
+
+Internet-Draft            CoAP Hop Limit Option                June 2019
+
 
 Authors' Addresses
 
@@ -325,17 +355,6 @@ Authors' Addresses
    India
 
    Email: kondtir@gmail.com
-
-
-
-
-
-
-
-
-Boucadair, et al.       Expires December 27, 2019               [Page 6]
-
-Internet-Draft            CoAP Hop Limit Option                June 2019
 
 
    Jon Shallow
@@ -370,23 +389,4 @@ Internet-Draft            CoAP Hop Limit Option                June 2019
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Boucadair, et al.       Expires December 27, 2019               [Page 7]
+Boucadair, et al.       Expires December 28, 2019               [Page 7]

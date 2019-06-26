@@ -230,6 +230,24 @@
       to the next hop without updating the diagnostic payload.</t>
     </section>
 
+    <section title="HTTP Mappings">
+      <t>This section focuses on the HTTP mappings specific to the CoAP
+      extension specified in this document. As a reminded, the basic normative
+      requirements on HTTP-to-CoAP mappings are defined in Section 10.2 of
+      <xref target="RFC7252"></xref>. The generic guidelines for HTTP/CoAP
+      mappings are elaborated in <xref target="RFC8075"></xref>. </t>
+
+      <t>By default, the HTTP-to-CoAP Proxy inserts a Hop-Limit option
+      following the guidelines in <xref target="spec"></xref>. Optionally, the
+      HTTP-to-CoAP Proxy may be instructed by policy to insert a Hop-Limit
+      option only if a 'Via' header is present in the HTTP request.</t>
+
+      <t>The HTTP-to-CoAP Proxy uses 506 (Loop Detected) as the HTTP response
+      status code to map TBA1 (Hop Limit Reached). Furthermore, it maps the
+      diagnostic payload of TBA1 (Hop Limit Reached) as per Section 6.6 of
+      <xref target="RFC8075"></xref>.</t>
+    </section>
+
     <section anchor="IANA" title="IANA Considerations">
       <t></t>
 
@@ -308,6 +326,8 @@
 
     <references title="Informative References">
       <?rfc include="reference.I-D.ietf-dots-signal-channel"?>
+
+      <?rfc include='reference.RFC.8075'?>
     </references>
   </back>
 </rfc>
