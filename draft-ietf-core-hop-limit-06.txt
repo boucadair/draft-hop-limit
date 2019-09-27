@@ -5,9 +5,9 @@
 CORE                                                        M. Boucadair
 Internet-Draft                                                    Orange
 Intended status: Standards Track                                T. Reddy
-Expires: March 26, 2020                                           McAfee
+Expires: March 30, 2020                                           McAfee
                                                               J. Shallow
-                                                      September 23, 2019
+                                                      September 27, 2019
 
 
         Constrained Application Protocol (CoAP) Hop-Limit Option
@@ -35,7 +35,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on March 26, 2020.
+   This Internet-Draft will expire on March 30, 2020.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Boucadair, et al.        Expires March 26, 2020                 [Page 1]
+Boucadair, et al.        Expires March 30, 2020                 [Page 1]
 
 Internet-Draft            CoAP Hop Limit Option           September 2019
 
@@ -67,12 +67,12 @@ Table of Contents
      1.1.  Intended Usage  . . . . . . . . . . . . . . . . . . . . .   2
    2.  Terminology . . . . . . . . . . . . . . . . . . . . . . . . .   3
    3.  Hop-Limit Option  . . . . . . . . . . . . . . . . . . . . . .   3
-   4.  Debugging & Troubleshooting . . . . . . . . . . . . . . . . .   4
+   4.  Debugging & Troubleshooting . . . . . . . . . . . . . . . . .   5
    5.  HTTP-Mapping Considerations . . . . . . . . . . . . . . . . .   5
    6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   6
      6.1.  CoAP Response Code  . . . . . . . . . . . . . . . . . . .   6
      6.2.  CoAP Option Number  . . . . . . . . . . . . . . . . . . .   6
-   7.  Security Considerations . . . . . . . . . . . . . . . . . . .   6
+   7.  Security Considerations . . . . . . . . . . . . . . . . . . .   7
    8.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   7
    9.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   7
      9.1.  Normative References  . . . . . . . . . . . . . . . . . .   7
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Boucadair, et al.        Expires March 26, 2020                 [Page 2]
+Boucadair, et al.        Expires March 30, 2020                 [Page 2]
 
 Internet-Draft            CoAP Hop Limit Option           September 2019
 
@@ -132,20 +132,24 @@ Internet-Draft            CoAP Hop Limit Option           September 2019
 
 3.  Hop-Limit Option
 
-   The Hop-Limit option (Table 1) is an elective option used to detect
-   and prevent infinite loops when proxies are involved.  The option is
-   not repeatable.  Therefore, any message carrying multiple Hop-Limit
-   options MUST be handled following the procedure specified in
-   Section 5.4.5 of [RFC7252].
+   The properties of the Hop-Limit option are shown in Table 1.  In this
+   table, the C, U, N, and R columns indicate the properties Critical,
+   Unsafe, NoCacheKey, and Repeatable defined in Section 5.4 of
+   [RFC7252].
 
     +--------+---+---+---+---+-----------+--------+--------+---------+
     | Number | C | U | N | R | Name      | Format | Length | Default |
     +--------+---+---+---+---+-----------+--------+--------+---------+
     |  TBA2  |   |   |   |   | Hop-Limit |  uint  |   1    |    16   |
     +--------+---+---+---+---+-----------+--------+--------+---------+
-        C=Critical, U=Unsafe, N=NoCacheKey, R=Repeatable
 
-                      Table 1: CoAP Option Properties
+                   Table 1: CoAP Hop-Limit Option Properties
+
+   The Hop-Limit option (Section 6.2) is an elective option used to
+   detect and prevent infinite loops when proxies are involved.  The
+   option is not repeatable.  Therefore, any message carrying multiple
+   Hop-Limit options MUST be handled following the procedure specified
+   in Section 5.4.5 of [RFC7252].
 
    The value of the Hop-Limit option is encoded as an unsigned integer
    (see Section 3.2 of [RFC7252]).  This value MUST be between 1 and 255
@@ -158,17 +162,18 @@ Internet-Draft            CoAP Hop Limit Option           September 2019
    option is also part of the cache key.  As such, a CoAP proxy which
    does not understand the Hop-Limit option must follow the
    recommendations in Section 5.7.1 of [RFC7252] for caching.  Note that
+
+
+
+Boucadair, et al.        Expires March 30, 2020                 [Page 3]
+
+Internet-Draft            CoAP Hop Limit Option           September 2019
+
+
    loops which involve only such proxies will not be detected.
    Nevertheless, the presence of such proxies will not prevent infinite
    loop detection if at least one CoAP proxy which support the Hop-Limit
    option is involved in the loop.
-
-
-
-Boucadair, et al.        Expires March 26, 2020                 [Page 3]
-
-Internet-Draft            CoAP Hop Limit Option           September 2019
-
 
    A CoAP proxy which understands the Hop-Limit option MAY be
    instructed, using a configuration parameter, to insert a Hop-Limit
@@ -213,19 +218,19 @@ Internet-Draft            CoAP Hop Limit Option           September 2019
    CoAP implementations support means to alert administrators about loop
    errors so that appropriate actions are undertaken.
 
+
+
+
+Boucadair, et al.        Expires March 30, 2020                 [Page 4]
+
+Internet-Draft            CoAP Hop Limit Option           September 2019
+
+
 4.  Debugging & Troubleshooting
 
    To ease debugging and troubleshooting, the CoAP proxy which detects a
    loop includes its information in the diagnostic payload under the
    conditions detailed in Section 5.5.2 of [RFC7252].  That information
-
-
-
-Boucadair, et al.        Expires March 26, 2020                 [Page 4]
-
-Internet-Draft            CoAP Hop Limit Option           September 2019
-
-
    MUST NOT include any space character.  The information inserted by a
    CoAP proxy can be, for example, a proxy name (e.g., p11.example.net),
    proxy alias (e.g., myproxyalias), or IP address (e.g., 2001:db8::1).
@@ -270,18 +275,16 @@ Internet-Draft            CoAP Hop Limit Option           September 2019
    status code to TBA1 (Hop Limit Reached).  Moreover, the CoAP-to-HTTP
    Proxy inserts its information following the guidelines in Section 4.
 
-   When both HTTP-to-CoAP and CoAP-to-HTTP proxies are involved, the
-   loop detection may get broken if the proxy-forwarded traffic
-   repeatedly crosses the HTTP-to-CoAP and CoAP-to-HTTP proxies.
 
 
-
-
-Boucadair, et al.        Expires March 26, 2020                 [Page 5]
+Boucadair, et al.        Expires March 30, 2020                 [Page 5]
 
 Internet-Draft            CoAP Hop Limit Option           September 2019
 
 
+   When both HTTP-to-CoAP and CoAP-to-HTTP proxies are involved, the
+   loop detection may get broken if the proxy-forwarded traffic
+   repeatedly crosses the HTTP-to-CoAP and CoAP-to-HTTP proxies.
    Nevertheless, if the loop is within the CoAP or HTTP legs, the loop
    detection is still functional.
 
@@ -324,19 +327,21 @@ Internet-Draft            CoAP Hop Limit Option           September 2019
    This document suggests 16 as a value to be assigned for the new
    option number.
 
+
+
+
+
+
+
+Boucadair, et al.        Expires March 30, 2020                 [Page 6]
+
+Internet-Draft            CoAP Hop Limit Option           September 2019
+
+
 7.  Security Considerations
 
    Security considerations related to CoAP proxying are discussed in
    Section 11.2 of [RFC7252].
-
-
-
-
-
-Boucadair, et al.        Expires March 26, 2020                 [Page 6]
-
-Internet-Draft            CoAP Hop Limit Option           September 2019
-
 
    The diagnostic payload of a TBA1 (Hop Limit Reached) error message
    may leak sensitive information revealing the topology of an
@@ -351,7 +356,7 @@ Internet-Draft            CoAP Hop Limit Option           September 2019
    thanks to those who reviewed DOTS specifications.
 
    Thanks to Klaus Hartke, Carsten Bormann, Peter van der Stok, Jim
-   Schaad, Jaime Jimenez, and Roni Even for the reviews.
+   Schaad, Jaime Jimenez, Roni Even, and Scott Bradner for the reviews.
 
    Carsten Bormann provided the "Intended Usage" text.
 
@@ -380,19 +385,18 @@ Internet-Draft            CoAP Hop Limit Option           September 2019
               DOI 10.17487/RFC8075, February 2017,
               <https://www.rfc-editor.org/info/rfc8075>.
 
-   [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
-              2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
-              May 2017, <https://www.rfc-editor.org/info/rfc8174>.
 
 
 
 
-
-
-Boucadair, et al.        Expires March 26, 2020                 [Page 7]
+Boucadair, et al.        Expires March 30, 2020                 [Page 7]
 
 Internet-Draft            CoAP Hop Limit Option           September 2019
 
+
+   [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
+              2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
+              May 2017, <https://www.rfc-editor.org/info/rfc8174>.
 
 9.2.  Informative References
 
@@ -441,8 +445,4 @@ Authors' Addresses
 
 
 
-
-
-
-
-Boucadair, et al.        Expires March 26, 2020                 [Page 8]
+Boucadair, et al.        Expires March 30, 2020                 [Page 8]

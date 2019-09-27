@@ -161,20 +161,26 @@
     </section>
 
     <section anchor="spec" title="Hop-Limit Option">
-      <t>The Hop-Limit option (Table 1) is an elective option used to detect
-      and prevent infinite loops when proxies are involved. The option is not
-      repeatable. Therefore, any message carrying multiple Hop-Limit options
-      MUST be handled following the procedure specified in Section 5.4.5 of
-      <xref target="RFC7252"></xref>.<figure align="center">
+      <t>The properties of the Hop-Limit option are shown in Table 1. In this
+      table, the C, U, N, and R columns indicate the properties Critical,
+      Unsafe, NoCacheKey, and Repeatable defined in Section 5.4 of <xref
+      target="RFC7252"></xref>. </t>
+
+      <t><figure align="center">
           <artwork align="center"><![CDATA[+--------+---+---+---+---+-----------+--------+--------+---------+
 | Number | C | U | N | R | Name      | Format | Length | Default |
 +--------+---+---+---+---+-----------+--------+--------+---------+
 |  TBA2  |   |   |   |   | Hop-Limit |  uint  |   1    |    16   |
 +--------+---+---+---+---+-----------+--------+--------+---------+
-    C=Critical, U=Unsafe, N=NoCacheKey, R=Repeatable
 
-                  Table 1: CoAP Option Properties]]></artwork>
+               Table 1: CoAP Hop-Limit Option Properties]]></artwork>
         </figure></t>
+
+      <t>The Hop-Limit option (<xref target="option"></xref>) is an elective
+      option used to detect and prevent infinite loops when proxies are
+      involved. The option is not repeatable. Therefore, any message carrying
+      multiple Hop-Limit options MUST be handled following the procedure
+      specified in Section 5.4.5 of <xref target="RFC7252"></xref>.</t>
 
       <t>The value of the Hop-Limit option is encoded as an unsigned integer
       (see Section 3.2 of <xref target="RFC7252"></xref>). This value MUST be
@@ -315,7 +321,7 @@
           </figure></t>
 
         <t>This document suggests 5.08 as a code to be assigned for the new
-        response code. </t>
+        response code.</t>
       </section>
 
       <section anchor="option" title="CoAP Option Number">
@@ -334,7 +340,7 @@
           </figure></t>
 
         <t>This document suggests 16 as a value to be assigned for the new
-        option number. </t>
+        option number.</t>
       </section>
     </section>
 
@@ -356,7 +362,8 @@
       reviewed DOTS specifications.</t>
 
       <t>Thanks to Klaus Hartke, Carsten Bormann, Peter van der Stok, Jim
-      Schaad, Jaime Jim&eacute;nez, and Roni Even for the reviews.</t>
+      Schaad, Jaime Jim&eacute;nez, Roni Even, and Scott Bradner for the
+      reviews.</t>
 
       <t>Carsten Bormann provided the "Intended Usage" text.</t>
     </section>
