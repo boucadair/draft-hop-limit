@@ -220,7 +220,7 @@
       received requests (i.e., ignore the value of Hop-Limit received in a
       request). This modification should be done with caution in case
       proxy-forwarded traffic repeatedly crosses the administrative domain
-      boundary in a loop rendering negating the efficacy of loop detection
+      boundary in a loop rendering ineffective the efficacy of loop detection
       through the Hop-Limit option. </t>
 
       <t>Otherwise, a CoAP proxy that understands the Hop-Limit option MUST
