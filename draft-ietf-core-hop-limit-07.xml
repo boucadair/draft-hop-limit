@@ -119,7 +119,7 @@
     <section anchor="introduction" title="Introduction">
       <t>More and more applications are using the Constrained Application
       Protocol (CoAP) <xref target="RFC7252"></xref> as a communication
-      protocol between involved application agents. For example, <xref
+      protocol between application agents. For example, <xref
       target="I-D.ietf-dots-signal-channel"></xref> specifies how CoAP is used
       as a signaling protocol between domains under distributed
       denial-of-service (DDoS) attacks and DDoS mitigation providers. In such
@@ -137,13 +137,17 @@
       <section title="Intended Usage">
         <t>The Hop-Limit option was originally designed for a specific use
         case <xref target="I-D.ietf-dots-signal-channel"></xref>. However, its
-        intended usage is general: New CoAP proxies MUST implement this option
-        and have it enabled by default.</t>
+        intended usage is general: <list style="empty">
+            <t>New CoAP proxies MUST implement this option and have it enabled
+            by default.</t>
+          </list></t>
 
         <t>Note that this means that a server that receives requests both via
         proxies and directly from clients may see otherwise identical requests
         with and without the Hop-Limit option included; servers with internal
-        caching will therefore also want to implement this option.</t>
+        caching will therefore also want to implement this option, since
+        understanding the Hop-Limit option will improve caching
+        efficiency.</t>
       </section>
     </section>
 
@@ -164,7 +168,7 @@
       target="RFC7252"></xref> (Section 5.10). The C, U, N, and R columns
       indicate the properties Critical, Unsafe, NoCacheKey, and Repeatable
       defined in Section 5.4 of <xref target="RFC7252"></xref>. None of these
-      properties is marked for the Hop-Limit option. </t>
+      properties is marked for the Hop-Limit option.</t>
 
       <t><figure align="center">
           <artwork align="center"><![CDATA[+--------+---+---+---+---+-----------+--------+--------+---------+
@@ -221,7 +225,7 @@
       request). This modification should be done with caution in case
       proxy-forwarded traffic repeatedly crosses the administrative domain
       boundary in a loop rendering ineffective the efficacy of loop detection
-      through the Hop-Limit option. </t>
+      through the Hop-Limit option.</t>
 
       <t>Otherwise, a CoAP proxy that understands the Hop-Limit option MUST
       decrement the value of the option by 1 prior to forwarding it. A CoAP
@@ -250,9 +254,9 @@
       loop includes an identifier for itself in the diagnostic payload under
       the conditions detailed in Section 5.5.2 of <xref
       target="RFC7252"></xref>. That identifier MUST NOT include any space
-      character. The identifier inserted by a CoAP proxy can be, for example,
-      a proxy name (e.g., p11.example.net), proxy alias (e.g., myproxyalias),
-      or IP address (e.g., 2001:db8::1).</t>
+      character (ASCII value 32). The identifier inserted by a CoAP proxy can
+      be, for example, a proxy name (e.g., p11.example.net), proxy alias
+      (e.g., myproxyalias), or IP address (e.g., 2001:db8::1).</t>
 
       <t>Each intermediate proxy involved in relaying a TBA1 (Hop Limit
       Reached) error message prepends its own identifier in the diagnostic
@@ -362,7 +366,7 @@
       making requests by tweaking the value of the Hop-Limit option. Such
       probing is likely to fail if proxies at the boundaries of that network
       rewrite the value of Hop-Limit carried in received requests (see <xref
-      target="spec"></xref>). </t>
+      target="spec"></xref>).</t>
 
       <t>The diagnostic payload of a TBA1 (Hop Limit Reached) error message
       may leak sensitive information revealing the topology of an
@@ -378,9 +382,10 @@
       reviewed DOTS specifications.</t>
 
       <t>Thanks to Klaus Hartke, Carsten Bormann, Peter van der Stok, Jim
-      Schaad, Jaime Jim&eacute;nez, Roni Even, Scott Bradner, Radia Perlman,
-      &Eacute;ric Vyncke, Suresh Krishnan, Roman Danyliw, Barry Leiba,
-      Christer Holmberg, and Benjamin Kaduk for their review.</t>
+      Schaad, Jaime Jim&eacute;nez, Roni Even, Scott Bradner, Thomas Fossati,
+      Radia Perlman, &Eacute;ric Vyncke, Suresh Krishnan, Roman Danyliw, Barry
+      Leiba, Christer Holmberg, Benjamin Kaduk, and Adam Roach for their
+      review and comments.</t>
 
       <t>Carsten Bormann provided the "Intended Usage" text.</t>
     </section>
